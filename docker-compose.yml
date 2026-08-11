@@ -1,0 +1,25 @@
+services:
+  app:
+    build: .
+    image: my-python-app:compose
+    container_name: my-app
+    environment:
+      MESSAGE: "Hello! It's my small project for learning Docker"
+      PORT: "8080"
+      PYTHONDONTWRITEBYTECODE: "1"
+    volumes:
+      - .:/app
+      - app_data:/data
+
+  nginx:
+    image: nginx
+    container_name: test-nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - app
+
+volumes:
+  app_data:
