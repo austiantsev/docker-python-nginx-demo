@@ -1,4 +1,4 @@
-    # Docker Python Nginx Demo
+# Docker Python Nginx Demo
 
 ## Описание
 
@@ -30,3 +30,47 @@ Nginx принимает запросы от браузера и перенап�
 
 ```bash
 docker-compose up -d
+```
+
+## Диагностика
+
+### Если сайт не открывается:
+
+### 1. Проверить статус контейнеров:
+
+```bash
+docker-compose ps
+```
+### 2. Проверить логи nginx:
+
+```bash
+docker-compose logs nginx
+```
+
+### 3. Проверить логи app:
+
+```bash
+docker-compose logs app
+```
+### 4. Проверить конфигурацию nginx внутри контейнера:
+
+```bash
+docker exec -it test-nginx nginx -t
+```
+### 5. Проверить proxy_pass в nginx.conf:
+
+```bash
+cat nginx.conf
+```
+
+### 6. Проверить переменную PORT внутри app-контейнера:
+
+```bash
+docker exec -it my-app sh -c 'echo $PORT'
+```
+
+### 7. Проверить, какой порт указан в app.py:
+
+```bash
+cat app.py
+```
