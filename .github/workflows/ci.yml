@@ -16,11 +16,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
 
-      - name: Build Docker image
-        run: docker build -t my-app:ci .
+      - name: Build application image
+        run: docker compose build app
 
       - name: Start containers
-        run: docker compose up -d --build
+        run: docker compose up -d --no-build
 
       - name: Check application
         run: curl --fail --retry 10 --retry-delay 2 --retry-connrefused http://localhost:8080
