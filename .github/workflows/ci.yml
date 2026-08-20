@@ -31,6 +31,12 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: Tag Docker image
+        run: docker tag my-python-app:compose austiantsev/docker-python-test:latest
+
+      - name: Push Docker image
+        run: docker push austiantsev/docker-python-test:latest    
+
       - name: Stop containers
         if: always()
         run: docker compose down
