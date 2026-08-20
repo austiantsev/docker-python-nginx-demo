@@ -39,7 +39,7 @@ jobs:
       - name: Push Docker image
         run: |
           docker push austiantsev/docker-python-test:latest
-          docker push austiantsev/docker-python-test:${{ github.sha }}t    
+          docker push austiantsev/docker-python-test:${{ github.sha }}
 
       - name: Stop containers
         if: always()
