@@ -32,10 +32,14 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Tag Docker image
-        run: docker tag my-python-app:compose austiantsev/docker-python-test:latest
+        run: |
+          docker tag my-python-app:compose austiantsev/docker-python-test:latest
+          docker tag my-python-app:compose austiantsev/docker-python-test:${{ github.sha }}
 
       - name: Push Docker image
-        run: docker push austiantsev/docker-python-test:latest    
+        run: |
+          docker push austiantsev/docker-python-test:latest
+          docker push austiantsev/docker-python-test:${{ github.sha }}t    
 
       - name: Stop containers
         if: always()
