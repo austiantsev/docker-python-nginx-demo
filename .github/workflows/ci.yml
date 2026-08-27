@@ -44,3 +44,23 @@ jobs:
       - name: Stop containers
         if: always()
         run: docker compose down
+
+  deploy:
+    needs: build-and-test
+    runs-on: [self-hosted, deploy]
+
+    steps:
+      - name: Update deployment files
+        run: |
+          cd ~/docker-python-deploy
+          git pull --ff-only
+
+      - name: Pull and deploy new image
+        run: |
+          cd ~/docker-python-deploy
+          docker compose -f docker-compose.prod.yml pull
+          docker compose -f docker-compose.prod.yml up -d
+
+      - name: Check deployed application
+        run: curl --fail --retry 10 --retry-delay 2 --retry-all-errors http://localhost:8080        
+
