@@ -8,7 +8,8 @@ class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         self.send_response(200)
         self.end_headers()
-        self.wfile.write(MESSAGE.encode())
+        response = f"Deployed automatically via CD | {MESSAGE}"
+        self.wfile.write(response.encode())
 
 server = HTTPServer(("0.0.0.0", PORT), Handler)
 server.serve_forever()
