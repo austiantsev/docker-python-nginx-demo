@@ -2,12 +2,26 @@ services:
   app:
     image: austiantsev/docker-python-test:latest
     container_name: my-app
+    restart: unless-stopped
+
     environment:
       MESSAGE: "Hello! It's my small project for learning Docker"
       PORT: "8080"
       PYTHONDONTWRITEBYTECODE: "1"
+
     volumes:
       - app_data:/data
+
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://localhost:8080')"
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
 
   nginx:
     image: nginx
