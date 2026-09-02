@@ -49,14 +49,21 @@ jobs:
     needs: build-and-test
     runs-on: [self-hosted, deploy]
 
-    env:
-      IMAGE_TAG: ${{ github.sha }}
-
     steps:
       - name: Update deployment files
         run: |
           cd ~/docker-python-deploy
-          git pull --ff-only
+
+          for attempt in 1 2 3; do
+            if git pull --ff-only; then
+              exit 0
+            fi
+
+            echo "Git pull failed: attempt ${attempt}/3"
+            sleep 5
+          done
+
+          exit 1
 
       - name: Pull and deploy new image
         run: |
