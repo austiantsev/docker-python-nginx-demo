@@ -8,8 +8,8 @@ services:
       MESSAGE: "Hello! It's my small project for learning Docker"
       PORT: "8080"
       PYTHONDONTWRITEBYTECODE: "1"
-      SIMULATE_FAILURE: "1"
 
+      
     volumes:
       - app_data:/data
 
